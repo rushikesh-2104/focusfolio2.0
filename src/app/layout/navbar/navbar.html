@@ -1,0 +1,70 @@
+<main class="bg-black text-white px-4 py-6 flex justify-between items-center relative z-50">
+
+  
+  <h1 class="logo-font text-3xl md:text-3xl font-bold tracking-wider">
+    FOCUSFOLIO
+  </h1>
+
+ 
+  <ul class="hidden md:flex logo-font text-lg items-center gap-10">
+    <li routerLink="" class="cursor-pointer active:scale-95 hover:text-blue-300 transition ">Home</li>
+    <li class="cursor-pointer active:scale-95 hover:text-blue-300 transition">About</li>
+    <li routerLink="gallery" class="cursor-pointer active:scale-95 hover:text-blue-300 transition">Gallery</li>
+    <li class="cursor-pointer active:scale-95 hover:text-blue-300 transition">Contact</li>
+  </ul>
+
+  
+  <button
+    class="md:hidden text-3xl active:scale-95"
+    (click)="toggleMenu()"
+  >
+    ☰
+  </button>
+
+</main>
+
+
+<div
+  class="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 transition-opacity duration-300"
+  [class.hidden]="!isMenuOpen"
+  (click)="closeMenu()"
+></div>
+
+
+<div
+  class="fixed top-0 right-0 h-screen w-72 bg-black backdrop-blur-lg border-l border-slate-700 z-50 shadow-2xl transform transition-transform duration-500 ease-out"
+  [class.translate-x-full]="!isMenuOpen"
+>
+
+  
+  <div class="flex justify-end p-5 active:scale-95">
+    <button
+      class="text-3xl text-white hover:rotate-90 transition duration-300"
+      (click)="closeMenu()"
+    >
+      ✕
+    </button>
+  </div>
+
+  
+  <ul class="flex text-white flex-col gap-8 px-8 pt-6 logo-font text-xl transform transition-transform duration-200 ease-in">
+
+    <li routerLink="" class="cursor-pointer active:text-blue-300 hover:translate-x-2 transition duration-300">
+      Home
+    </li>
+
+    <li class="cursor-pointer active:text-blue-300 hover:translate-x-2 transition duration-300">
+      About
+    </li>
+
+    <li routerLink="gallery" class="cursor-pointer active:text-blue-300 hover:translate-x-2 transition duration-300">
+      Gallery
+    </li>
+
+    <li class="cursor-pointer active:text-blue-300 hover:translate-x-2 transition duration-300">
+      Contact
+    </li>
+
+  </ul>
+
+</div>

@@ -1,0 +1,35 @@
+<main class="relative md:h-min-screen lg:h-screen h-screen w-screen md:w-full overflow-hidden">
+
+  <video
+    autoplay
+    muted
+    loop
+    playsinline
+    class="absolute inset-0 h-full w-full object-cover"
+  >
+    <source src="hero.mp4" type="video/mp4">
+  </video>
+
+
+  <div class="absolute inset-0 bg-black/50"></div>
+
+ 
+  <div class="relative pt-60 z-10 flex h-full flex-col items-center justify-center text-white">
+
+    <h1 class="logo-font text-5xl md:text-8xl font-bold">
+      FOCUSFOLIO
+    </h1>
+
+    <p class="mt-4 text-lg md:text-2xl">
+      Shot on <span class="logo-font hover:text-blue-300">Nothing Phone (1)</span>, Refined with <span class="hover:text-green-300 font-serif">Snapseed</span>
+    </p>
+
+    <button routerLink="gallery"
+      class="logo-font text-xl mt-8 rounded-full border border-white px-8 py-3 active:scale-90 active:border-blue-300 hover:text-blue-300 transition"
+    >
+      Gallery
+    </button>
+
+  </div>
+
+</main>

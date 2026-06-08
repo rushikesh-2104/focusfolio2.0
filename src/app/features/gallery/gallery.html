@@ -1,20 +1,46 @@
-<section class="bg-black min-h-screen px-4 md:px-8 py-20">
+<section id="gallery" class="bg-black min-h-screen px-4 md:px-8 py-20">
 
+  <!-- Heading -->
   <div class="text-center mb-12">
-    <h2 class="text-4xl md:text-5xl font-bold text-white">
-      Featured Work
+
+    <h2 class="text-4xl md:text-5xl text-white logo-font">
+      Visual Stories
     </h2>
 
     <p class="text-zinc-400 mt-4">
       A collection of moments captured through my lens.
     </p>
+
   </div>
 
-  <div
-    class="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4"
-  >
+  <!-- Categories -->
+  <div class="flex gap-3 overflow-x-auto justify-center mb-10">
 
-    @for(photo of photos; track photo.id){
+    @for(category of categories; track category){
+
+      <button
+        (click)="filterCategory(category)"
+        class="logo-font hover:text-blue-300 active:border-blue-500 active:scale-95 px-5 py-2 rounded-full border border-zinc-700 text-white transition-all duration-300"
+
+        [class.bg-black]="selectedCategory === category"
+        [class.text-black]="selectedCategory === category"
+      >
+        {{ category }}
+      </button>
+
+    }
+
+  </div>
+
+  <!-- Debug
+  <p class="text-center text-zinc-500 mb-8">
+    Total Photos: {{ filteredPhotos.length }}
+  </p> -->
+
+  <!-- Masonry Gallery -->
+  <div class="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4">
+
+    @for(photo of filteredPhotos; track photo.id){
 
       <div
         class="mb-4 break-inside-avoid overflow-hidden rounded-2xl group cursor-pointer"
@@ -24,20 +50,27 @@
 
           <img
             [src]="photo.url"
-            [alt]="photo.title"
+            [alt]="photo.publicId"
+            loading="lazy"
             class="w-full rounded-2xl transition duration-500 group-hover:scale-105"
           />
 
+          <!-- Hover Overlay -->
           <div
-            class="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition duration-500"
+            class="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition duration-500"
           ></div>
 
+          <!-- Category -->
           <div
             class="absolute bottom-0 left-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition duration-500"
           >
-            <h3 class="text-white font-semibold">
-              {{ photo.title }}
-            </h3>
+
+            <span
+              class="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm text-white"
+            >
+              {{ photo.category }}
+            </span>
+
           </div>
 
         </div>

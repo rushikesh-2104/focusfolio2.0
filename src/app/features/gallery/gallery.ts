@@ -1,19 +1,56 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { GalleryService } from '../../services/gallery';
 
 @Component({
   selector: 'app-gallery',
-  imports: [],
-  standalone:true,
   templateUrl: './gallery.html',
-  styleUrl: './gallery.css',
+  styleUrl: './gallery.css'
 })
-export class Gallery {
-photos = [
-    { id: 1, url: 'photos/photo1.jpg', title: 'Photo 1' },
-    { id: 2, url: 'photos/photo2.jpg', title: 'Photo 2' },
-    { id: 3, url: 'photos/photo3.jpg', title: 'Photo 3' },
-    { id: 4, url: 'photos/photo4.jpg', title: 'Photo 4' },
-    { id: 5, url: 'photos/photo5.jpg', title: 'Photo 5' },
-    { id: 6, url: 'photos/photo6.jpg', title: 'Photo 6' },
-  ];
+export class Gallery implements OnInit {
+
+  private galleryService = inject(GalleryService);
+
+  photos: any[] = [];
+  filteredPhotos: any[] = [];
+
+  categories: string[] = [];
+  selectedCategory = 'All';
+
+  ngOnInit() {
+
+    this.galleryService.getPhotos().subscribe(data => {
+
+      this.photos = data;
+      this.filteredPhotos = data;
+
+      const uniqueCategories = [
+        ...new Set(
+          data.map(photo => photo.category)
+        )
+      ];
+
+      this.categories = [
+        'All',
+        ...uniqueCategories
+      ];
+
+    });
+
+  }
+
+  filterCategory(category: string) {
+
+    this.selectedCategory = category;
+
+    if(category === 'All'){
+      this.filteredPhotos = this.photos;
+      return;
+    }
+
+    this.filteredPhotos = this.photos.filter(
+      photo => photo.category === category
+    );
+
+  }
+
 }

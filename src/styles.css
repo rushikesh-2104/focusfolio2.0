@@ -4,3 +4,7 @@
 .logo-font {
   font-family: "Bitcount Single", system-ui;
 }
+
+html {
+  scroll-behavior: smooth;
+}

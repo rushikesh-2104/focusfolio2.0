@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-navbar',
-  imports: [RouterLink],
+  imports: [],
   standalone:true,
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
@@ -16,4 +15,14 @@ toggleMenu(){
 closeMenu() {
   this.isMenuOpen = false;
 }
+
+scrollToSection(id: string) {
+  document
+    .getElementById(id)
+    ?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+}
+
 }

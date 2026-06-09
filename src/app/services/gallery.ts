@@ -10,7 +10,7 @@ export class GalleryService {
 
   getPhotos() {
     return this.http.get<any[]>(
-      'http://localhost:3000/photos'
+      'https://ff-backend-plum.vercel.app/photos'
     );
   }
 }

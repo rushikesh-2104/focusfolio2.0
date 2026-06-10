@@ -12,9 +12,12 @@ export class Gallery implements OnInit {
 
   photos: any[] = [];
   filteredPhotos: any[] = [];
+  displayedPhotos: any[] = [];
 
   categories: string[] = [];
   selectedCategory = 'All';
+
+  visibleCount = window.innerWidth < 768 ? 10 : 9999;
 
   ngOnInit() {
 
@@ -22,6 +25,7 @@ export class Gallery implements OnInit {
 
       this.photos = data;
       this.filteredPhotos = data;
+      this.displayedPhotos = data.slice(0, this.visibleCount);
 
       const uniqueCategories = [
         ...new Set(
@@ -42,13 +46,28 @@ export class Gallery implements OnInit {
 
     this.selectedCategory = category;
 
-    if(category === 'All'){
+    if (category === 'All') {
       this.filteredPhotos = this.photos;
-      return;
+    } else {
+      this.filteredPhotos = this.photos.filter(
+        photo => photo.category === category
+      );
     }
 
-    this.filteredPhotos = this.photos.filter(
-      photo => photo.category === category
+    this.displayedPhotos = this.filteredPhotos.slice(
+      0,
+      this.visibleCount
+    );
+
+  }
+
+  loadMore() {
+
+    this.visibleCount += 10;
+
+    this.displayedPhotos = this.filteredPhotos.slice(
+      0,
+      this.visibleCount
     );
 
   }

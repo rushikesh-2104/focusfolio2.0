@@ -14,16 +14,16 @@
   </div>
 
   <!-- Categories -->
-  <div class="flex gap-3 overflow-x-auto justify-center mb-10">
+  <div class="flex flex-wrap justify-center gap-3 mb-10 max-w-4xl mx-auto px-2">
 
     @for(category of categories; track category){
 
       <button
         (click)="filterCategory(category)"
-        class="logo-font hover:text-blue-300 active:border-blue-500 active:scale-95 px-5 py-2 rounded-full border border-zinc-700 text-white transition-all duration-300"
+        class="logo-font aactive:scale-95 active:border-blue-400 text-sm md:text-base px-4 md:px-5 py-2 rounded-full border border-zinc-700 text-white transition-all duration-300 hover:border-white hover:text-blue-300"
 
-        [class.bg-black]="selectedCategory === category"
-        [class.text-black]="selectedCategory === category"
+        [class.border-white]="selectedCategory === category"
+        [class.text-blue-300]="selectedCategory === category"
       >
         {{ category }}
       </button>
@@ -32,15 +32,10 @@
 
   </div>
 
-  <!-- Debug
-  <p class="text-center text-zinc-500 mb-8">
-    Total Photos: {{ filteredPhotos.length }}
-  </p> -->
-
   <!-- Masonry Gallery -->
   <div class="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4">
 
-    @for(photo of filteredPhotos; track photo.id){
+    @for(photo of displayedPhotos; track photo.id){
 
       <div
         class="mb-4 break-inside-avoid overflow-hidden rounded-2xl group cursor-pointer"
@@ -60,7 +55,7 @@
             class="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition duration-500"
           ></div>
 
-          <!-- Category -->
+          <!-- Category Badge -->
           <div
             class="absolute bottom-0 left-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition duration-500"
           >
@@ -80,5 +75,21 @@
     }
 
   </div>
+
+  <!-- Load More -->
+  @if(displayedPhotos.length < filteredPhotos.length){
+
+    <div class="flex justify-center mt-12">
+
+      <button
+        (click)="loadMore()"
+        class="logo-font px-6 py-3 rounded-full border border-zinc-700 text-white hover:bg-white hover:text-black transition-all duration-300"
+      >
+        LOAD MORE
+      </button>
+
+    </div>
+
+  }
 
 </section>

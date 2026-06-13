@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { GalleryService } from '../../services/gallery';
 
 @Component({
@@ -17,9 +17,10 @@ export class Gallery implements OnInit {
   categories: string[] = [];
   selectedCategory = 'All';
 
-  visibleCount = window.innerWidth < 768 ? 10 : 9999;
+  // Initial photos
+  visibleCount = 10;
 
-  ngOnInit() {
+  ngOnInit(): void {
 
     this.galleryService.getPhotos().subscribe(data => {
 
@@ -42,7 +43,7 @@ export class Gallery implements OnInit {
 
   }
 
-  filterCategory(category: string) {
+  filterCategory(category: string): void {
 
     this.selectedCategory = category;
 
@@ -54,6 +55,9 @@ export class Gallery implements OnInit {
       );
     }
 
+    // Reset to first 10 photos
+    this.visibleCount = 10;
+
     this.displayedPhotos = this.filteredPhotos.slice(
       0,
       this.visibleCount
@@ -61,7 +65,7 @@ export class Gallery implements OnInit {
 
   }
 
-  loadMore() {
+  loadMore(): void {
 
     this.visibleCount += 10;
 

@@ -17,6 +17,8 @@ export class Gallery implements OnInit {
   categories: string[] = [];
   selectedCategory = 'All';
 
+  selectedPhoto: any = null;
+
   // Initial photos
   visibleCount = 10;
 
@@ -55,7 +57,6 @@ export class Gallery implements OnInit {
       );
     }
 
-    // Reset to first 10 photos
     this.visibleCount = 10;
 
     this.displayedPhotos = this.filteredPhotos.slice(
@@ -74,6 +75,14 @@ export class Gallery implements OnInit {
       this.visibleCount
     );
 
+  }
+
+  openPhoto(photo: any): void {
+    this.selectedPhoto = photo;
+  }
+
+  closePhoto(): void {
+    this.selectedPhoto = null;
   }
 
 }

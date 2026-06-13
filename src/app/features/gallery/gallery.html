@@ -20,8 +20,7 @@
 
       <button
         (click)="filterCategory(category)"
-        class="logo-font aactive:scale-95 active:border-blue-400 text-sm md:text-base px-4 md:px-5 py-2 rounded-full border border-zinc-700 text-white transition-all duration-300 hover:border-white hover:text-blue-300"
-
+        class="logo-font active:scale-95 active:border-blue-400 text-sm md:text-base px-4 md:px-5 py-2 rounded-full border border-zinc-700 text-white transition-all duration-300 hover:border-white hover:text-blue-300"
         [class.border-white]="selectedCategory === category"
         [class.text-blue-300]="selectedCategory === category"
       >
@@ -33,7 +32,7 @@
   </div>
 
   <!-- Masonry Gallery -->
-  <div class="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4">
+  <div class="columns-2 lg:columns-3 xl:columns-4 gap-4">
 
     @for(photo of displayedPhotos; track photo.id){
 
@@ -45,8 +44,9 @@
 
           <img
             [src]="photo.url"
-            [alt]="photo.publicId + + ' photography by Rushikesh Mhatre'"
+            [alt]="photo.publicId + ' photography by Rushikesh Mhatre'"
             loading="lazy"
+            (click)="openPhoto(photo)"
             class="w-full rounded-2xl transition duration-500 group-hover:scale-105"
           />
 
@@ -87,6 +87,34 @@
       >
         LOAD MORE
       </button>
+
+    </div>
+
+  }
+
+  <!-- Fullscreen Image Modal -->
+  @if(selectedPhoto){
+
+    <div
+      class="fixed inset-0 z-[9999] bg-black/95 flex items-center justify-center p-4"
+      (click)="closePhoto()"
+    >
+
+      <!-- Close Button -->
+      <button
+        (click)="closePhoto()"
+        class="absolute top-5 right-5 text-white text-5xl leading-none hover:scale-110 transition"
+      >
+        ×
+      </button>
+
+      <!-- Image -->
+      <img
+        [src]="selectedPhoto.url"
+        [alt]="selectedPhoto.publicId"
+        class="max-w-full max-h-[90vh] rounded-xl shadow-2xl"
+        (click)="$event.stopPropagation()"
+      />
 
     </div>
 

@@ -17,10 +17,11 @@ export class Gallery implements OnInit {
   categories: string[] = [];
   selectedCategory = 'All';
 
+  // Fullscreen Modal
   selectedPhoto: any = null;
 
-  // Initial photos
-  visibleCount = 10;
+  // Initial visible photos
+  visibleCount = window.innerWidth < 768 ? 10 : 20;
 
   ngOnInit(): void {
 
@@ -57,7 +58,8 @@ export class Gallery implements OnInit {
       );
     }
 
-    this.visibleCount = 10;
+    // Reset count on category change
+    this.visibleCount = window.innerWidth < 768 ? 10 : 20;
 
     this.displayedPhotos = this.filteredPhotos.slice(
       0,
@@ -79,10 +81,16 @@ export class Gallery implements OnInit {
 
   openPhoto(photo: any): void {
     this.selectedPhoto = photo;
+
+    // Prevent background scroll when modal opens
+    document.body.style.overflow = 'hidden';
   }
 
   closePhoto(): void {
     this.selectedPhoto = null;
+
+    // Restore scrolling
+    document.body.style.overflow = 'auto';
   }
 
 }

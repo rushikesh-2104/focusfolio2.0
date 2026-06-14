@@ -38,6 +38,7 @@
 
       <div
         class="mb-4 break-inside-avoid overflow-hidden rounded-2xl group cursor-pointer"
+        (click)="openPhoto(photo)"
       >
 
         <div class="relative">
@@ -46,18 +47,17 @@
             [src]="photo.url"
             [alt]="photo.publicId + ' photography by Rushikesh Mhatre'"
             loading="lazy"
-            (click)="openPhoto(photo)"
             class="w-full rounded-2xl transition duration-500 group-hover:scale-105"
           />
 
           <!-- Hover Overlay -->
           <div
-            class="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition duration-500"
+            class="absolute inset-0 pointer-events-none bg-black/0 group-hover:bg-black/30 transition duration-500"
           ></div>
 
           <!-- Category Badge -->
           <div
-            class="absolute bottom-0 left-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition duration-500"
+            class="absolute bottom-0 left-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition duration-500 pointer-events-none"
           >
 
             <span
@@ -92,7 +92,7 @@
 
   }
 
-  <!-- Fullscreen Image Modal -->
+  <!-- Fullscreen Modal -->
   @if(selectedPhoto){
 
     <div
@@ -102,13 +102,14 @@
 
       <!-- Close Button -->
       <button
-        (click)="closePhoto()"
-        class="absolute top-5 right-5 text-white text-5xl leading-none hover:scale-110 transition"
+        type="button"
+        (click)="closePhoto(); $event.stopPropagation()"
+        class="absolute top-5 right-5 text-white text-5xl z-[10000]"
       >
         ×
       </button>
 
-      <!-- Image -->
+      <!-- Full Image -->
       <img
         [src]="selectedPhoto.url"
         [alt]="selectedPhoto.publicId"

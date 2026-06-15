@@ -24,57 +24,110 @@
         [class.border-white]="selectedCategory === category"
         [class.text-blue-300]="selectedCategory === category"
       >
-        {{ category }}
+
+        @if(category === 'Bookmarks'){
+           Bookmarks
+        } @else {
+          {{ category }}
+        }
+
       </button>
 
     }
 
   </div>
 
+  <!-- Empty Bookmark State -->
+  @if(
+    selectedCategory === 'Bookmarks' &&
+    displayedPhotos.length === 0
+  ){
+
+    <div class="text-center py-20">
+
+      <div class="text-6xl mb-4">
+        🔖
+      </div>
+
+      <h3 class="text-white text-2xl mb-2">
+        No Bookmarks Yet
+      </h3>
+
+      <p class="text-zinc-500">
+        Save your favorite photos to see them here.
+      </p>
+
+    </div>
+
+  }
+
   <!-- Masonry Gallery -->
-  <div class="columns-2 lg:columns-3 xl:columns-4 gap-4">
+  @if(displayedPhotos.length > 0){
 
-    @for(photo of displayedPhotos; track photo.id){
+    <div class="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4">
 
-      <div
-        class="mb-4 break-inside-avoid overflow-hidden rounded-2xl group cursor-pointer"
-        (click)="openPhoto(photo)"
-      >
+      @for(photo of displayedPhotos; track photo.id){
 
-        <div class="relative">
+        <div
+          class="mb-4 break-inside-avoid overflow-hidden rounded-2xl group cursor-pointer"
+          (click)="openPhoto(photo)"
+        >
 
-          <img
-            [src]="photo.url"
-            [alt]="photo.publicId + ' photography by Rushikesh Mhatre'"
-            loading="lazy"
-            class="w-full rounded-2xl transition duration-500 group-hover:scale-105"
-          />
+          <div class="relative">
 
-          <!-- Hover Overlay -->
-          <div
-            class="absolute inset-0 pointer-events-none bg-black/0 group-hover:bg-black/30 transition duration-500"
-          ></div>
-
-          <!-- Category Badge -->
-          <div
-            class="absolute bottom-0 left-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition duration-500 pointer-events-none"
-          >
-
-            <span
-              class="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm text-white"
+            <!-- Bookmark -->
+            <button
+              (click)="toggleBookmark(photo.id); $event.stopPropagation()"
+              class="absolute top-3 right-3 z-20 text-2xl transition-all duration-300 hover:scale-110"
             >
-              {{ photo.category }}
-            </span>
+
+              @if(isBookmarked(photo.id)){
+                🔖
+              } @else {
+                🤍
+              }
+
+            </button>
+
+            <!-- Image -->
+            <img
+              [src]="photo.url"
+              [alt]="photo.publicId + ' photography by Rushikesh Mhatre'"
+              loading="lazy"
+              class="w-full rounded-2xl transition duration-500 group-hover:scale-105 group-hover:brightness-110"
+            />
+
+            <!-- Overlay -->
+            <div
+              class="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition duration-500"
+            ></div>
+
+            <!-- Info -->
+            <div
+              class="absolute bottom-0 left-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition duration-500"
+            >
+
+              <h3 class="text-white font-medium text-lg">
+                {{ photo.publicId }}
+              </h3>
+
+              <span
+                class="inline-block mt-2 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm text-white"
+              >
+                {{ photo.category }}
+              </span>
+
+            </div>
 
           </div>
 
         </div>
 
-      </div>
+      }
 
-    }
+    </div>
 
-  </div>
+  }
 
   <!-- Load More -->
   @if(displayedPhotos.length < filteredPhotos.length){
@@ -100,7 +153,25 @@
       (click)="closePhoto()"
     >
 
-      <!-- Close Button -->
+      <!-- Previous -->
+      <button
+        type="button"
+        (click)="prevPhoto(); $event.stopPropagation()"
+        class="absolute left-2 md:left-8 text-white text-5xl z-[10000] hover:scale-110 transition"
+      >
+        ‹
+      </button>
+
+      <!-- Next -->
+      <button
+        type="button"
+        (click)="nextPhoto(); $event.stopPropagation()"
+        class="absolute right-2 md:right-8 text-white text-5xl z-[10000] hover:scale-110 transition"
+      >
+        ›
+      </button>
+
+      <!-- Close -->
       <button
         type="button"
         (click)="closePhoto(); $event.stopPropagation()"
@@ -109,13 +180,28 @@
         ×
       </button>
 
-      <!-- Full Image -->
+      <!-- Image -->
       <img
         [src]="selectedPhoto.url"
         [alt]="selectedPhoto.publicId"
         class="max-w-full max-h-[90vh] rounded-xl shadow-2xl"
         (click)="$event.stopPropagation()"
       />
+
+      <!-- Bottom Details -->
+      <div
+        class="absolute bottom-8 left-1/2 -translate-x-1/2 text-center"
+      >
+
+        <h3 class="text-white text-xl md:text-2xl font-semibold">
+          {{ selectedPhoto.publicId }}
+        </h3>
+
+        <p class="text-zinc-300 mt-2">
+          {{ selectedPhoto.category }}
+        </p>
+
+      </div>
 
     </div>
 

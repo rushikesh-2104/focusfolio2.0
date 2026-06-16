@@ -1,33 +1,47 @@
-<main id="home"  class="relative md:h-min-screen lg:h-screen h-screen w-screen md:w-full overflow-hidden">
+<main id="home" class="relative h-screen w-full overflow-hidden">
 
   <video
-    autoplay
+    #heroVideo
     muted
+    autoplay
     loop
     playsinline
     preload="auto"
-    class="absolute inset-0 h-full w-full object-cover"
+    class="absolute inset-0 h-full w-screen object-cover"
   >
-    <source src="hero.mp4" type="video/mp4">
+    <source src="/hero.mp4" type="video/mp4">
   </video>
-
 
   <div class="absolute inset-0 bg-black/50"></div>
 
- 
-  <div class="relative pt-60 z-10 flex h-full flex-col items-center justify-center text-white">
+  <div class="relative z-10 flex h-full flex-col items-center justify-center text-white">
 
     <h1 class="logo-font text-5xl md:text-8xl font-bold">
       FOCUSFOLIO
     </h1>
 
-    <p class="mt-4 text-sm md:text-2xl">
+    <p class="mt-4 text-center text-sm md:text-2xl">
       Shot on
-      <a href="https://in.nothing.tech/" target = "_blank"> <span class="logo-font hover:text-blue-300"> Nothing Phone (1)</span></a>, Refined with <a href="https://snapseedpc.online/"></a> <span class="hover:text-green-300 font-serif">Snapseed</span>
+      <a
+        href="https://in.nothing.tech/"
+        target="_blank"
+        class="logo-font hover:text-blue-300"
+      >
+        Nothing Phone (1)
+      </a>,
+      Refined with
+      <a
+        href="https://snapseedpc.online/"
+        target="_blank"
+        class="font-serif hover:text-green-300"
+      >
+        Snapseed
+      </a>
     </p>
 
-    <button (click)="scrollToSection('gallery')"
-      class="logo-font text-xl mt-8 rounded-full border border-white px-8 py-3 active:scale-90 active:border-blue-300 hover:text-blue-300 transition"
+    <button
+      (click)="scrollToSection('gallery')"
+      class="logo-font mt-8 rounded-full border border-white px-8 py-3 text-xl transition hover:text-blue-300 active:scale-90"
     >
       Gallery
     </button>
